@@ -13,9 +13,7 @@ const Post = (props: propsType) => {
     return <div className={s.item}>
                 <img src={'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'}/>
                     <span>{props.message}</span>
-
                     <span> <button onClick={counterHandler}> {likeCounter} Like</button></span>
-
     </div>
 }
 
