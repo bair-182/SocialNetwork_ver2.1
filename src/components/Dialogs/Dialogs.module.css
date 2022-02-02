@@ -8,11 +8,13 @@
 }
 
 .dialogsItems .dialog {
-
+    color: white;
+    text-decoration: none;
 }
 
 .dialogsItems .active {
     color: goldenrod;
+    text-decoration: none;
 }
 
 .messages {
@@ -20,5 +22,6 @@
 }
 
 .messages .message {
-
+    color: white;
+    text-decoration: none;
 }

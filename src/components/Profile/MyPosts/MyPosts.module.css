@@ -1,3 +1,10 @@
 .posts {
-    color: blue;
+    margin-top: 10px;
+    color: whitesmoke;
+    padding: 10px;
+}
+
+.postsBlock {
+    color: whitesmoke;
+    padding: 10px;
 }
