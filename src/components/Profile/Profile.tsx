@@ -1,13 +1,24 @@
 import React from "react";
-import s from './Profile.module.css';
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import {dialogItemType} from "../Dialogs/Dialogs";
 
 
-const Profile = () => {
+export type postItemType = {
+    id: number,
+    message: string,
+    likesCount: number
+}
+
+type propsType = {
+    postData: Array<postItemType>,
+    avaLink: Array<dialogItemType>,
+}
+
+const Profile = (props: propsType) => {
     return <div>
         <ProfileInfo/>
-        <MyPosts/>
+        <MyPosts postData={props.postData} dialogsData={props.avaLink}/>
     </div>
 }
 

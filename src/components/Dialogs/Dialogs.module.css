@@ -12,6 +12,10 @@
     text-decoration: none;
 }
 
+.dialogsItems .img {
+    width: 80px;
+}
+
 .dialogsItems .active {
     color: goldenrod;
     text-decoration: none;

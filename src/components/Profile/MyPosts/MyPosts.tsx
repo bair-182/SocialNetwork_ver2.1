@@ -1,29 +1,30 @@
 import React from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
+import {postItemType} from "../Profile";
+import {dialogItemType} from "../../Dialogs/Dialogs";
 
+type propsType = {
+    postData: Array<postItemType>,
+    dialogsData: Array<dialogItemType>
+}
 
+const MyPosts = (props: propsType) => {
 
-
-const MyPosts = () => {
-
-    let postData = [
-        {id: 1, message:'Hi, hello!!! How are you???', likesCount: 12},
-        {id: 2, message:'It is my 1st post! Yay!!', likesCount: 5},
-    ]
+    let postElements = props.postData.map(p => <Post message={p.message} likesCount={p.likesCount} />)
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <textarea></textarea>
+                <textarea>poka pusto</textarea>
             </div>
             <div>
                 <button>Add post</button>
             </div>
             <div className={s.posts}>
-                <Post message={postData[0].message} likesCount={postData[0].likesCount}/>
-                <Post message={postData[1].message} likesCount={postData[1].likesCount}/>
+                {postElements}
+
             </div>
         </div>
     )
