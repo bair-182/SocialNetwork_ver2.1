@@ -48,7 +48,6 @@ let state = {
 export let addPost = (postMessage: string) => {
     let newPost = { id: 6, message: postMessage, likesCount: 0 }
     state.profilePage.postData.push(newPost);
-    console.log(state.profilePage.postData)
 }
 
 
