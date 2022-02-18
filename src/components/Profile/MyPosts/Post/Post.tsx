@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import s from './Post.module.css';
-import {dialogItemType} from "../../../Dialogs/Dialogs";
-import UserAva from "../../../Dialogs/UserAva/UserAva";
 
 type propsType= {
     message: string,
@@ -14,7 +12,7 @@ const Post = (props: propsType) => {
 
     return <div className={s.item}>
 
-                    <span><UserAva ava={}/>{props.message}</span>
+                    <span>{props.message}</span>
                     <span> <button onClick={counterHandler}>  {likeCounter} Likes </button>
                     </span>
     </div>

@@ -8,6 +8,7 @@ import Dialogs, {dialogItemType, messageItemType} from "./components/Dialogs/Dia
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
+import {addPost} from "./redux/state";
 
 export type propsType = {
     state: {
@@ -19,6 +20,7 @@ export type propsType = {
             messagesData: Array<messageItemType>,
         },
     }
+    addPost: (postMessage: string)=> void;
 }
 
 function App(props: propsType) {
@@ -29,7 +31,7 @@ function App(props: propsType) {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path="/profile" element={<Profile postData={props.state.profilePage.postData} avaLink={props.state.messagesPage.dialogsData}/>}/>
+                    <Route path="/profile" element={<Profile postData={props.state.profilePage.postData} addPost={props.addPost}/>}/>
                     <Route path="/dialogs" element={<Dialogs dialogsData={props.state.messagesPage.dialogsData}
                                                              messagesData={props.state.messagesPage.messagesData}/>}/>
                     <Route path="/news" element={<News/>}/>

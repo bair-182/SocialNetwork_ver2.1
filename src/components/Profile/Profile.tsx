@@ -12,13 +12,13 @@ export type postItemType = {
 
 type propsType = {
     postData: Array<postItemType>,
-    avaLink: Array<dialogItemType>,
+    addPost: (postMessage: string)=> void;
 }
 
 const Profile = (props: propsType) => {
     return <div>
         <ProfileInfo/>
-        <MyPosts postData={props.postData} dialogsData={props.avaLink}/>
+        <MyPosts postData={props.postData} addPost={props.addPost}/>
     </div>
 }
 

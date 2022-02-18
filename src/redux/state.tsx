@@ -1,4 +1,5 @@
 import React from "react";
+import {postItemType} from "../components/Profile/Profile";
 
 
 let state = {
@@ -6,10 +7,11 @@ let state = {
         postData: [
             {id: 1, message: 'Hi, hello!!! How are you???', likesCount: 12},
             {id: 2, message: 'It is my 1st post! Yay!!', likesCount: 5},
-            {id: 3, message: 'It is my 1st post! Yay!!', likesCount: 2},
-            {id: 4, message: 'Massiv ahooenniy', likesCount: 2},
-            {id: 5, message: 'Eeeeeiiiiibaaat\'  kakoi krutoi react', likesCount: 2},
+            {id: 3, message: 'It is my 2st post! Yaeee!!', likesCount: 2},
+            {id: 4, message: 'Massiv ofigenniy', likesCount: 2},
+            {id: 5, message: 'Eeeeeiiiiibaaat\' kakoi krutoi react', likesCount: 2},
         ],
+       //newPostText: ''
     },
     messagesPage: {
         dialogsData: [
@@ -36,6 +38,19 @@ let state = {
         //     {id: 6, ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
         // ]
     },
+    sidebar: {},
 };
+
+// const changePostText = (text: string) => {
+//
+// }
+
+export let addPost = (postMessage: string) => {
+    let newPost = { id: 6, message: postMessage, likesCount: 0 }
+    state.profilePage.postData.push(newPost);
+    console.log(state.profilePage.postData)
+}
+
+
 
 export default state;
