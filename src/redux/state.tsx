@@ -1,55 +1,202 @@
-import React from "react";
-import {postItemType} from "../components/Profile/Profile";
+import {v1} from "uuid";
 
+type MessagesDataType = {
+    id: string
+    message: string
+}
+type DialogsDataType = {
+    id: string
+    name: string
+    ava: string
+}
+type PostDataType = {
+    id: string
+    message: string
+    likesCount: number
+}
+type PostType = {
+    postData: Array<PostDataType>,
+    newPostText: string
+}
+type MessagesPageType = {
+    dialogsData: Array<DialogsDataType>
+    messagesData: Array<MessagesDataType>
+    newMessageBody: string
+}
 
-let state = {
-    profilePage: {
-        postData: [
-            {id: 1, message: 'Hi, hello!!! How are you???', likesCount: 12},
-            {id: 2, message: 'It is my 1st post! Yay!!', likesCount: 5},
-            {id: 3, message: 'It is my 2st post! Yaeee!!', likesCount: 2},
-            {id: 4, message: 'Massiv ofigenniy', likesCount: 2},
-            {id: 5, message: 'Eeeeeiiiiibaaat\' kakoi krutoi react', likesCount: 2},
-        ],
-       //newPostText: ''
-    },
-    messagesPage: {
-        dialogsData: [
-            {id: 1, name: 'Bair', ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
-            {id: 2, name: 'Dimich', ava: 'https://static.wikia.nocookie.net/despicableme/images/e/e7/Kevin_minions_2015_.png'},
-            {id: 3, name: 'Valera', ava: 'https://static.wikia.nocookie.net/despicableme/images/8/8a/9OWIHvkWrgM.jpg/revision/latest?cb=20201229130421&path-prefix=ru'},
-            {id: 4, name: 'Victor', ava: 'https://klike.net/uploads/posts/2019-03/1551511801_1.jpg'},
-            {id: 5, name: 'Igor', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJqTR5vhHWagoGH4p1-eqzwS8C6MJECGNLtkhR91dKtn2cLrJ-s-Xdi2LaIwSCTfsYGH8&usqp=CAU'},
-            {id: 6, name: 'Andrew', ava: 'https://lifehacki.ru/wp-content/uploads/2020/09/Avatarki-dlja-Vatsapa-dlja-muzhchin-2.jpg'},
-        ],
-        messagesData: [
-            {id: 1, message: 'Hi'},
-            {id: 2, message: 'How your React learning progress?'},
-            {id: 3, message: 'Very good!'},
-            {id: 4, message: 'And what about you?'},
-            {id: 5, message: 'Awesome!!!'},
-        ],
-        // avaData: [
-        //     {id: 1, ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
-        //     {id: 2, ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
-        //     {id: 3, ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
-        //     {id: 4, ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
-        //     {id: 5, ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
-        //     {id: 6, ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
-        // ]
-    },
-    sidebar: {},
-};
+export type RootStateType = {
+    profilePage: PostType
+    messagesPage: MessagesPageType
+    sidebar: {}
+}
 
-// const changePostText = (text: string) => {
+// let rerenderTree = () => {
+//     console.log('hello render!')
+// }
 //
+// export const subscribe = (callback: () => void) => {
+//     rerenderTree = callback
 // }
 
-export let addPost = (postMessage: string) => {
-    let newPost = { id: 6, message: postMessage, likesCount: 0 }
-    state.profilePage.postData.push(newPost);
+export type StoreType = {
+    _state: RootStateType,
+    subscribe: (observer: () => void) => void,
+    _onChange: () => void,
+    getState: () => RootStateType,
+    dispatch: (action: ActionsTypes) => void,
+}
+
+type AddPostActionType = {
+    type: 'ADD-POST',
+}
+type UpdateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT',
+    newText: string,
+}
+type LikesCountActionType = {
+    type: 'UPDATE-LIKES-COUNT',
+    messageId: string,
+}
+type UpdateNewMessageActionType = {
+    type: 'UPDATE-NEW-MESSAGE-TEXT',
+    body: string,
+}
+type SendMessageActionType = {
+    type: 'SEND-MESSAGE-TEXT',
+}
+
+export type ActionsTypes =
+    AddPostActionType
+    | UpdateNewPostTextActionType
+    | LikesCountActionType
+    | UpdateNewMessageActionType
+    | SendMessageActionType
+
+// export const addPostAC = (): AddPostActionType => {
+//     return {
+//         type: 'ADD-POST',
+//     } as const
+// }
+// export const updateNewPostTextAC = (newtext: string): UpdateNewPostTextActionType => {
+//     return {
+//         type: 'UPDATE-NEW-POST-TEXT',
+//         newText: newtext,
+//     } as const
+// }
+// export const LikesCountAC = (messageId: string): LikesCountActionType => {
+//     return {
+//         type: 'UPDATE-LIKES-COUNT',
+//         messageId: messageId
+//     } as const
+// }
+
+// export const updateNewMessageBodyAC = (textBody: string): UpdateNewMessageActionType => {
+//     return {
+//         type: 'UPDATE-NEW-MESSAGE-TEXT', body: textBody
+//     } as const
+// }
+//
+// export const sendMessageAC = (): SendMessageActionType => {
+//     return {
+//         type: 'SEND-MESSAGE-TEXT',
+//     } as const
+// }
+
+
+const store: StoreType = {
+    _state: {
+        profilePage: {
+            postData: [
+                {id: v1(), message: 'Hi, hello!!! How are you???', likesCount: 0},
+                {id: v1(), message: 'It is my 1st post! Yay!!', likesCount: 0},
+                {id: v1(), message: 'It is my 2nd post! Yaeee!!', likesCount: 0},
+                {id: v1(), message: 'Massiv ofigenniy', likesCount: 0},
+                {id: v1(), message: 'Kruuuuut\' kakoi krutoi react', likesCount: 0},
+            ],
+            newPostText: ''
+        },
+        messagesPage: {
+            dialogsData: [
+                {
+                    id: v1(),
+                    name: 'Bair',
+                    ava: 'https://live.staticflickr.com/2883/10643657485_30bdf4ce0b_z.jpg'},
+                {
+                    id: v1(),
+                    name: 'Dimich',
+                    ava: 'https://vsekidki.ru/uploads/posts/2016-08/1470735121_lecdaa3axdc.jpg'
+                },
+                {
+                    id: v1(),
+                    name: 'Valera',
+                    ava: 'https://cs-site.ru/uploads/posts/2020-09/1600253903_35.jpg'
+                },
+                {
+                    id: v1(),
+                    name: 'Victor',
+                    ava: 'https://klike.net/uploads/posts/2019-03/1551511801_1.jpg'},
+                {
+                    id: v1(),
+                    name: 'Igor',
+                    ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJqTR5vhHWagoGH4p1-eqzwS8C6MJECGNLtkhR91dKtn2cLrJ-s-Xdi2LaIwSCTfsYGH8&usqp=CAU'
+                },
+                {
+                    id: v1(),
+                    name: 'Andrew',
+                    ava: 'https://lifehacki.ru/wp-content/uploads/2020/09/Avatarki-dlja-Vatsapa-dlja-muzhchin-2.jpg'
+                },
+            ],
+            messagesData: [
+                {id: v1(), message: 'Hi'},
+                {id: v1(), message: 'How your React learning progress?'},
+                {id: v1(), message: 'Very good!'},
+                {id: v1(), message: 'And what about you?'},
+                {id: v1(), message: 'Awesome!!!'},
+            ],
+            newMessageBody: '',
+        },
+        sidebar: {},
+    },
+    _onChange() {
+        console.log('State changed');
+    },
+
+    dispatch(action: ActionsTypes) {
+        if (action.type === 'ADD-POST') {
+            this._state.profilePage.postData.push({
+                id: v1(),
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            });
+            console.log('Rendered post:  ' + this._state.profilePage.newPostText)
+            this._state.profilePage.newPostText = '';
+            this._onChange();
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText;
+            console.log('UPDATE-NEW-POST-TEXT : ', this._state.profilePage.newPostText)
+            this._onChange();
+        } else if (action.type === 'UPDATE-LIKES-COUNT') {
+            this._state.profilePage.postData.map(lk => lk.id === action.messageId ? lk.likesCount++ : lk)
+            console.log('Likes number is UPDATED in message # ', action.messageId)
+            this._onChange();
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.messagesPage.newMessageBody = action.body;
+            this._onChange();
+        } else if (action.type === 'SEND-MESSAGE-TEXT') {
+            let body = this._state.messagesPage.newMessageBody;
+            this._state.messagesPage.newMessageBody = ''
+            this._state.messagesPage.messagesData.push({id: v1(), message: body});
+            this._onChange();
+        }
+    },
+
+    subscribe(observer) {
+        this._onChange = observer;
+    },
+    getState() {
+        return this._state;
+    }
 }
 
 
-
-export default state;
+export default store;

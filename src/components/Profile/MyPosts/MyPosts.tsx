@@ -1,35 +1,46 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent} from "react";
 import s from './MyPosts.module.css';
 import Post from "./Post/Post";
-import {postItemType} from "../Profile";
-import {dialogItemType} from "../../Dialogs/Dialogs";
+import {ActionsTypes, StoreType} from "../../../redux/state";
 
 type propsType = {
-    postData: Array<postItemType>,
-    addPost: (postMessage: string) => void,
+    store:StoreType,
+    dispatch: (action: ActionsTypes) => void,
 }
 
 const MyPosts = (props: propsType) => {
-    let [value, setValue] = useState('')
-    let postElements = props.postData.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
-
-    console.log(value);
-
-    let onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let postMessage = e.currentTarget.value;
-        setValue(postMessage);
-    }
+    let postElements = props.store._state.profilePage.postData.map(p =>
+        <Post
+            key={p.id}
+            messageId={p.id}
+            message={p.message}
+            likesCount={p.likesCount}
+        />)
 
     let addPostHandler = () => {
-        props.addPost(value)
-        setValue('');
+        if (props.store._state.profilePage.newPostText !== '') props.dispatch({type: 'ADD-POST' })
+        else alert('Post need text!')
+    }
+
+    let onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.store.dispatch({type: "UPDATE-NEW-POST-TEXT", newText: e.currentTarget.value})
+    }
+    let onKeyPressHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+        if ( event.charCode === 13 ) {
+            event.preventDefault();
+            if (props.store._state.profilePage.newPostText !== '') props.dispatch({type: 'ADD-POST' })
+            else alert('Post need text!')
+        }
     }
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <textarea onChange={onChangeHandler} value={value}/>
+                <textarea value={props.store._state.profilePage.newPostText}
+                          onChange={onChangeHandler}
+                          onKeyPress={onKeyPressHandler}
+                />
             </div>
             <div>
                 <button onClick={addPostHandler}>Add post</button>

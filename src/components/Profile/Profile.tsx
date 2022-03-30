@@ -1,24 +1,18 @@
 import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {dialogItemType} from "../Dialogs/Dialogs";
-
-
-export type postItemType = {
-    id: number,
-    message: string,
-    likesCount: number
-}
+import {StoreType} from "../../redux/state";
 
 type propsType = {
-    postData: Array<postItemType>,
-    addPost: (postMessage: string)=> void;
+    store: StoreType
 }
 
 const Profile = (props: propsType) => {
     return <div>
         <ProfileInfo/>
-        <MyPosts postData={props.postData} addPost={props.addPost}/>
+        <MyPosts store={props.store}
+                 dispatch={props.store.dispatch.bind(props.store)}
+        />
     </div>
 }
 

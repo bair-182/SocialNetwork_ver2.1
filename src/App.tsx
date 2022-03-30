@@ -3,27 +3,18 @@ import {Route, Routes} from "react-router-dom";
 import './App.css';
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Profile, {postItemType} from "./components/Profile/Profile";
-import Dialogs, {dialogItemType, messageItemType} from "./components/Dialogs/Dialogs";
+import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
-import {addPost} from "./redux/state";
+import {StoreType} from "./redux/state";
+import Profile from "./components/Profile/Profile";
 
-export type propsType = {
-    state: {
-        profilePage: {
-            postData: Array<postItemType>,
-        },
-        messagesPage: {
-            dialogsData: Array<dialogItemType>,
-            messagesData: Array<messageItemType>,
-        },
-    }
-    addPost: (postMessage: string)=> void;
+type propsType = {
+    store: StoreType,
 }
 
-function App(props: propsType) {
+const App: React.FC<propsType> = (props) => {
 
     return (
         <div className='app-wrapper'>
@@ -31,9 +22,15 @@ function App(props: propsType) {
             <Navbar/>
             <div className='app-wrapper-content'>
                 <Routes>
-                    <Route path="/profile" element={<Profile postData={props.state.profilePage.postData} addPost={props.addPost}/>}/>
-                    <Route path="/dialogs" element={<Dialogs dialogsData={props.state.messagesPage.dialogsData}
-                                                             messagesData={props.state.messagesPage.messagesData}/>}/>
+                    <Route path="/profile" element={<Profile store={props.store}
+                    />}/>
+                    <Route path="/dialogs" element={<Dialogs dialogsData={props.store._state.messagesPage.dialogsData}
+                                                             messagesData={props.store._state.messagesPage.messagesData}
+                                                             newMessageBody={props.store._state.messagesPage.newMessageBody}
+                                                             store={props.store}
+                                                    />}
+
+                    />
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
                     <Route path="/settings" element={<Settings/>}/>
